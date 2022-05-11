@@ -37,18 +37,18 @@ const Services = () => {
           Services We Provide
         </h1>
       </div>
-      <section className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+      <section className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:gap-8 my-24">
         {services.map((service) => (
           <Service key={service._id} service={service} />
         ))}
       </section>
-      <section>
-        <div class="card lg:card-side px-40 mt-7">
+      <section className="my-44">
+        <div className="card lg:card-side px-40 mt-7">
           <figure>
             <img className="w-96 h-full rounded" src={treatment} alt="Album" />
           </figure>
-          <div class="card-body ml-7">
-            <h2 class="card-title text-5xl">
+          <div className="card-body ml-7">
+            <h2 className="card-title text-5xl">
               Exceptional Dental Care, on Your Terms
             </h2>
             <p>
@@ -59,7 +59,7 @@ const Services = () => {
               here', making it look like readable English. Many desktop
               publishing packages and web page
             </p>
-            <div class="card-actions justify-start">
+            <div className="card-actions justify-start">
               <ButtonPrimary>Get Started</ButtonPrimary>
             </div>
           </div>
