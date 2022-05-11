@@ -42,16 +42,16 @@ const Services = () => {
           <Service key={service._id} service={service} />
         ))}
       </section>
-      <section className="my-44">
-        <div className="card lg:card-side px-40 mt-7">
+      <section className="lg:my-44 sm:my-5">
+        <div className="card lg:card-side lg:px-40 lg:mt-7">
           <figure>
             <img className="w-96 h-full rounded" src={treatment} alt="Album" />
           </figure>
-          <div className="card-body ml-7">
-            <h2 className="card-title text-5xl">
+          <div className="card-body lg:ml-7">
+            <h2 className="card-title lg:text-5xl sm:text-2xl">
               Exceptional Dental Care, on Your Terms
             </h2>
-            <p>
+            <p className="lg:text-base sm:text-xs">
               It is a long established fact that a reader will be distracted by
               the readable content of a page when looking at its layout. The
               point of using Lorem Ipsumis that it has a more-or-less normal

@@ -9,7 +9,7 @@ import NavBar from "./Components/Shared/NavBar/NavBar";
 
 function App() {
   return (
-    <>
+    <div className="lg:px-10 sm:px-5 max-w-7xl mx-auto">
       <NavBar />
       <Routes>
         <Route path="/" element={<HomePage />}></Route>
@@ -19,7 +19,7 @@ function App() {
         <Route path="/contact-us" element={<ContactUs />}></Route>
         <Route path="/log-in" element={<LogIn />}></Route>
       </Routes>
-    </>
+    </div>
   );
 }
 
