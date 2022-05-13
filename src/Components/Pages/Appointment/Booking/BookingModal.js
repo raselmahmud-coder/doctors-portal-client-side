@@ -36,7 +36,7 @@ const BookingModal = ({ treatment, selected, setTreatment }) => {
                     w-full
                     px-3
                     py-1.5
-                    text-base
+                    text-baseselect
                     font-normal
                     bg-gray-200
                     outline-none
@@ -63,7 +63,7 @@ const BookingModal = ({ treatment, selected, setTreatment }) => {
                     Select
                   </option>
                   {slots.map((slot) => (
-                    <option value={slot}>{slot}</option>
+                    <option key={slot} value={slot}>{slot}</option>
                   ))}
                 </select>
               </div>

@@ -1,4 +1,6 @@
 import { Route, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
 import AboutUs from "./Components/Pages/About/AboutUs";
 import Appointment from "./Components/Pages/Appointment/AppointmentPage";
 import ContactUs from "./Components/Pages/ContactUs/ContactUs";
@@ -19,6 +21,17 @@ function App() {
         <Route path="/contact-us" element={<ContactUs />}></Route>
         <Route path="/log-in" element={<LogIn />}></Route>
       </Routes>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 }

@@ -12,16 +12,16 @@ const MailCollection = () => {
           backgroundRepeat: "no-repeat",
         }}
       >
-        <div class="p-6 rounded-lg">
+        <div className="p-6 rounded-lg">
           <h1 className="text-primary text-center my-1">Contact Us</h1>
           <h1 className="text-white text-center text-2xl pb-7">
             Stay Connected With Us
           </h1>
           <form>
-            <div class="form-group mb-6">
+            <div className="form-group mb-6">
               <input
                 type="email"
-                class="form-control
+                className="form-control
         w-full
         px-3
         py-1.5
@@ -39,10 +39,10 @@ const MailCollection = () => {
                 placeholder="Email address"
               />
             </div>
-            <div class="form-group mb-6">
+            <div className="form-group mb-6">
               <input
                 type="text"
-                class="form-control
+                className="form-control
         w-full
         px-3
         py-1.5
@@ -61,9 +61,9 @@ const MailCollection = () => {
               />
             </div>
 
-            <div class="form-group mb-6">
+            <div className="form-group mb-6">
               <textarea
-                class="
+                className="
         form-control
         w-full
         px-3
