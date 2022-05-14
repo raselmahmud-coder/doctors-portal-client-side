@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSignInWithGoogle } from "react-firebase-hooks/auth";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import auth from "../../../firebase.init";
 import DoctorsPortalSpinner from "../../Shared/DoctorsPortalSpinner/DoctorsPortalSpinner";
@@ -9,27 +9,35 @@ const SocialLogIn = () => {
   const [signInWithGoogle, googleUser, googleLoading, googleError] =
     useSignInWithGoogle(auth);
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+  useEffect(() => {
+    if (googleUser) {
+      navigate(from, { replace: true });
+    }
+  }, [navigate, from, googleUser]);
   const handleGoogle = () => {
     signInWithGoogle();
   };
-  if (googleLoading) {
-    return <DoctorsPortalSpinner />;
-  }
+
   if (googleError) {
-    toast(`error happen ${googleError}`, {
-      id: "error",
+    toast.error(`error happen ${googleError}`, {
+      toastId: "google-error",
+      theme: "colored",
     });
   }
-  if (googleUser) {
-    navigate("/");
-  }
+
   return (
     <>
       <button
         onClick={handleGoogle}
         className="py-3 rounded-md uppercase border-gray-400 border-2"
       >
-        continue with google
+        {googleLoading ? (
+          <DoctorsPortalSpinner className="flex justify-center" />
+        ) : (
+          "continue with google"
+        )}
       </button>
     </>
   );

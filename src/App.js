@@ -6,6 +6,7 @@ import Appointment from "./Components/Pages/Appointment/AppointmentPage";
 import ContactUs from "./Components/Pages/ContactUs/ContactUs";
 import HomePage from "./Components/Pages/Home/HomePage";
 import LogIn from "./Components/Pages/LogIn/LogIn";
+import Registration from "./Components/Pages/Registration/Registration";
 import Reviews from "./Components/Pages/Reviews/Reviews";
 import NavBar from "./Components/Shared/NavBar/NavBar";
 
@@ -20,6 +21,7 @@ function App() {
         <Route path="/reviews" element={<Reviews />}></Route>
         <Route path="/contact-us" element={<ContactUs />}></Route>
         <Route path="/log-in" element={<LogIn />}></Route>
+        <Route path="/registration" element={<Registration />}></Route>
       </Routes>
       <ToastContainer
         position="top-center"
