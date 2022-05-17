@@ -28,15 +28,16 @@ const Registration = () => {
   }, [navigate, from, user]);
 
   const onSubmit = async (data) => {
-    const name = data.name;
+    const displayName = data.name;
     const email = data.email;
     const password = data.password;
     await createUserWithEmailAndPassword(email, password);
-    await updateProfile({ name });
+    await updateProfile({displayName });
     toast.success("user is created", {
       id: "updated",
     });
-  };
+    };
+    console.log(user);
   if (loading || updating) {
     return (
       <>

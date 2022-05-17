@@ -1,17 +1,46 @@
 import { format } from "date-fns";
 import React from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { toast } from "react-toastify";
+import auth from "../../../../firebase.init";
 
-const BookingModal = ({ treatment, selected, setTreatment }) => {
-  const { name, slots } = treatment;
+const BookingModal = ({ treatment, selected, setTreatment, refetch }) => {
+  const { _id, name, slots } = treatment;
+  const [user] = useAuthState(auth);
+  const formattedDate = format(selected, "PP");
   const handleBookingForm = (e) => {
     e.preventDefault();
-    const time = e.target.time.value;
-    const select = e.target.select.value;
-    const name = e.target.name.value;
+    // const time = e.target.time.value;
+    const slot = e.target.select.value;
+    // const name = e.target.name.value;
     const phone = e.target.phone.value;
-    const email = e.target.email.value;
-    console.log(time, select, name, phone, email);
-    setTreatment(null);
+    const booking = {
+      treatmentId: _id,
+      treatment: name,
+      date: formattedDate,
+      slot,
+      patient: user.email,
+      patientName: user.displayName,
+      phone: phone,
+    };
+    fetch(`http://localhost:5000/booking`, {
+      method: "post",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(booking),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          toast.success(`you have booked ${slot}`);
+        } else {
+          toast.error(`You have booked already this treatment`);
+        }
+        refetch();
+        setTreatment(null);
+        console.log(data);
+      });
   };
   return (
     <div>
@@ -47,6 +76,7 @@ const BookingModal = ({ treatment, selected, setTreatment }) => {
               </div>
               <div className="mb-6">
                 <select
+                  defaultValue={"DEFAULT"}
                   className=" 
                 w-full 
                 px-3
@@ -59,11 +89,13 @@ const BookingModal = ({ treatment, selected, setTreatment }) => {
                 "
                   name="select"
                 >
-                  <option disabled selected>
-                    Select
+                  <option value={"defaultValue"} readOnly>
+                    Select Time
                   </option>
                   {slots.map((slot) => (
-                    <option key={slot} value={slot}>{slot}</option>
+                    <option key={slot} value={slot}>
+                      {slot}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -87,8 +119,8 @@ const BookingModal = ({ treatment, selected, setTreatment }) => {
                     focus:bg-white 
                     focus:border-blue-600 
                     focus:outline-none"
-                  placeholder="Full Name"
-                  name="name"
+                  value={user?.displayName}
+                  disabled
                 />
               </div>
               <div className="mb-6">
@@ -117,7 +149,7 @@ const BookingModal = ({ treatment, selected, setTreatment }) => {
               </div>
               <div className="mb-6">
                 <input
-                  name="email"
+                  value={user?.email}
                   type="email"
                   className="
                     w-full
@@ -135,7 +167,7 @@ const BookingModal = ({ treatment, selected, setTreatment }) => {
                     ease-in-out
                     m-0
                     focus:outline-none"
-                  placeholder="Email"
+                  disabled
                 />
               </div>
               <button
