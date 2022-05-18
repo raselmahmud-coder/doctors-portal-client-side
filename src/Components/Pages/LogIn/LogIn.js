@@ -1,29 +1,27 @@
 import React, { useEffect } from "react";
-import {
-  useAuthState,
-  useSignInWithEmailAndPassword,
-} from "react-firebase-hooks/auth";
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { SpinnerCircular } from "spinners-react";
 import auth from "../../../firebase.init";
+import useToken from "../../../hooks/useToken";
 import Footer from "../../Shared/Footer/Footer";
 import SocialLogIn from "./SocialLogIn";
 
 const LogIn = () => {
-  const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
   const [signInWithEmailAndPassword, logInUser, loadingUser, errorUser] =
     useSignInWithEmailAndPassword(auth);
+  const [token] = useToken(logInUser);
   useEffect(() => {
-    if (user || logInUser) {
+    if (token && logInUser) {
       navigate(from, { replace: true });
     }
-  }, [navigate, from, user, logInUser]);
+  }, [navigate, from, token, logInUser]);
 
-  if (loading || loadingUser) {
+  if (loadingUser) {
     return (
       <>
         <SpinnerCircular
@@ -34,9 +32,10 @@ const LogIn = () => {
       </>
     );
   }
-  if (error || errorUser) {
-    toast.error(`Error ${error}`, {
-      id: "user-error",
+  if (errorUser) {
+    toast.error(`Custom log in ${errorUser}`, {
+      toastId: "custom_err",
+      theme: "colored",
     });
   }
   const handleForm = (e) => {
@@ -47,9 +46,9 @@ const LogIn = () => {
   };
   return (
     <>
-      <div className="lg:w-1/3 mx-auto bg-base-100 drop-shadow rounded mt-12">
+      <div className="p-6 lg:w-1/3 mx-auto bg-base-100 drop-shadow rounded mt-12">
         <h2 className="text-3xl text-center">Login</h2>
-        <form className="p-6" onSubmit={handleForm}>
+        <form onSubmit={handleForm}>
           <label htmlFor="email">Email</label>
           <input
             name="email"
@@ -76,11 +75,11 @@ const LogIn = () => {
               Create new account
             </Link>
           </div>
-          <div className="flex flex-col w-full border-opacity-50">
-            <div className="divider">OR</div>
-            <SocialLogIn />
-          </div>
         </form>
+        <div className="flex justify-center flex-col w-full border-opacity-50">
+          <div className="divider">OR</div>
+        </div>
+        <SocialLogIn />
       </div>
       <Footer />
     </>
