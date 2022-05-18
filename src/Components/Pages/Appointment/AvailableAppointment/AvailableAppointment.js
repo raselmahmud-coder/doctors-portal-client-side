@@ -16,7 +16,7 @@ const AvailableAppointment = ({ selected }) => {
     error,
     refetch
   } = useQuery(["available", formattedDate], () =>
-    fetch(`http://localhost:5000/available?date=${formattedDate}`).then((res) =>
+    fetch(`https://doctors-portal-rm.herokuapp.com/available?date=${formattedDate}`).then((res) =>
       res.json()
     )
   );

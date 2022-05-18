@@ -23,7 +23,7 @@ const BookingModal = ({ treatment, selected, setTreatment, refetch }) => {
       patientName: user.displayName,
       phone: phone,
     };
-    fetch(`http://localhost:5000/booking`, {
+    fetch(`https://doctors-portal-rm.herokuapp.com/booking`, {
       method: "post",
       headers: {
         "content-type": "application/json",
@@ -119,7 +119,7 @@ const BookingModal = ({ treatment, selected, setTreatment, refetch }) => {
                     focus:bg-white 
                     focus:border-blue-600 
                     focus:outline-none"
-                  value={user?.displayName}
+                  value={user?.displayName || "Display Name Empty"}
                   disabled
                 />
               </div>

@@ -13,6 +13,7 @@ import LogIn from "./Components/Pages/LogIn/LogIn";
 import Registration from "./Components/Pages/Registration/Registration";
 import Reviews from "./Components/Pages/Reviews/Reviews";
 import NavBar from "./Components/Shared/NavBar/NavBar";
+import RequiredAdmin from "./Components/Shared/RequiredAdmin/RequiredAdmin";
 import RequiredAuth from "./Components/Shared/RequiredAuth/RequiredAuth";
 
 function App() {
@@ -32,7 +33,14 @@ function App() {
         >
           <Route index element={<MyAppointments />}></Route>
           <Route path="my-review" element={<MyReview />}></Route>
-          <Route path="all-user" element={<AllUser />}></Route>
+          <Route
+            path="all-user"
+            element={
+              <RequiredAdmin>
+                <AllUser />
+              </RequiredAdmin>
+            }
+          ></Route>
         </Route>
         <Route
           path="/appointment"
