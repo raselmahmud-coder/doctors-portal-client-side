@@ -29,16 +29,18 @@ const Dashboard = () => {
           </li>
           {adminLoading ? (
             <>
-              <SpinnerCircular
-                speed={120}
-                color={"#0FCFEC"}
-              />
+              <SpinnerCircular speed={120} color={"#0FCFEC"} />
             </>
           ) : (
             admin && (
-              <li>
-                <Link to={"/dashboard/all-user"}>All User</Link>
-              </li>
+              <>
+                <li>
+                  <Link to={"/dashboard/all-user"}>All User</Link>
+                </li>
+                <li>
+                  <Link to={"/dashboard/add-doctor"}>Add Doctor</Link>
+                </li>
+              </>
             )
           )}
         </ul>
