@@ -7,6 +7,7 @@ import ContactUs from "./Components/Pages/ContactUs/ContactUs";
 import AddDoctor from "./Components/Pages/dashboard/AddDoctor";
 import AllUser from "./Components/Pages/dashboard/AllUser";
 import Dashboard from "./Components/Pages/dashboard/Dashboard";
+import ManageDoctors from "./Components/Pages/dashboard/ManageDoctors";
 import MyAppointments from "./Components/Pages/dashboard/MyAppointments";
 import MyReview from "./Components/Pages/dashboard/MyReview";
 import HomePage from "./Components/Pages/Home/HomePage";
@@ -47,6 +48,14 @@ function App() {
             element={
               <RequiredAdmin>
                 <AddDoctor />
+              </RequiredAdmin>
+            }
+          ></Route>
+          <Route
+            path="manage-doctors"
+            element={
+              <RequiredAdmin>
+                <ManageDoctors />
               </RequiredAdmin>
             }
           ></Route>
