@@ -7,7 +7,6 @@ import { SpinnerCircular } from "spinners-react";
 import { toast } from "react-toastify";
 
 const AvailableAppointment = ({ selected }) => {
-  // const [Bookings, setBookings] = useState([]);
   const [treatment, setTreatment] = useState(null);
   const formattedDate = format(selected, "PP");
   const {

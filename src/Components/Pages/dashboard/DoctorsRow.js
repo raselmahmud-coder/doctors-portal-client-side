@@ -1,26 +1,9 @@
 import React from "react";
-import { toast } from "react-toastify";
 
-const DoctorsRow = ({ doctor, refetch }) => {
+
+const DoctorsRow = ({ doctor, handleConfirming }) => {
   const { image, name, specialty, email } = doctor;
-  const handleDelete = () => {
-    fetch(`http://localhost:5000/doctor/${email}`, {
-      method: "DELETE",
-      headers: {
-        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        if (data.acknowledged) {
-          toast.success(`${name} Doctor deleted`, {
-            toastId: "doctor-delete",
-          });
-          refetch();
-        }
-      });
-  };
+
   return (
     <>
       <tr>
@@ -45,11 +28,12 @@ const DoctorsRow = ({ doctor, refetch }) => {
           <div className="font-bold">{specialty}</div>
         </td>
         <th>
-          <button className="btn btn-ghost btn-xs" onClick={handleDelete}>
+          <label htmlFor="delete-confirm" className="btn btn-ghost" onClick={()=>handleConfirming(email, name)}>
             Delete
-          </button>
+          </label>
         </th>
       </tr>
+      
     </>
   );
 };
