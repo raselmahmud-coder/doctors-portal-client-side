@@ -40,7 +40,7 @@ const BookingModal = ({ treatment, selected, setTreatment, refetch }) => {
         }
         refetch();
         setTreatment(null);
-        console.log(data);
+        // console.log(data);
       });
   };
   return (

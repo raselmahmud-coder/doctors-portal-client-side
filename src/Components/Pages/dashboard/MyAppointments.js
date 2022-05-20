@@ -2,14 +2,17 @@ import { signOut } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Link, useNavigate } from "react-router-dom";
+import { SpinnerCircular } from "spinners-react";
 import auth from "../../../firebase.init";
 
 const MyAppointments = () => {
   const [appointments, setAppointments] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [user] = useAuthState(auth);
   const navigate = useNavigate();
   useEffect(() => {
-    if (user) {
+    setLoading(true);
+    if (user.email) {
       fetch(
         `https://doctors-portal-rm.herokuapp.com/booking?patient=${user.email}`,
         {
@@ -27,10 +30,25 @@ const MyAppointments = () => {
           }
           return res.json();
         })
-        .then((data) => setAppointments(data));
+        .then((data) => {
+          if (data) {
+            setLoading(false);
+            setAppointments(data);
+          }
+        });
     }
   }, [user, navigate, appointments]);
-  // console.log(appointments)
+  if (loading) {
+    return (
+      <>
+        <SpinnerCircular
+          speed={120}
+          color={"#0FCFEC"}
+          style={{ margin: "0px auto", display: "block" }}
+        />
+      </>
+    );
+  }
   return (
     <>
       <h1 className="text-xl text-teal-300 text-center my-3 capitalize">
@@ -44,6 +62,7 @@ const MyAppointments = () => {
               <th>Treatment Name</th>
               <th>Date</th>
               <th>Time</th>
+              <th>Price</th>
               <th>Payment</th>
               <th>Action</th>
             </tr>
@@ -60,7 +79,9 @@ const MyAppointments = () => {
                   <td>
                     <div className="flex items-center space-x-2">
                       <div>
-                        <div className="font-bold">{appointment.treatment}</div>
+                        <div className="font-bold">
+                          {appointment?.treatment}
+                        </div>
                       </div>
                     </div>
                   </td>
@@ -68,11 +89,15 @@ const MyAppointments = () => {
                     {appointment.date}
                     <br />
                   </td>
-                  <td>{appointment.slot}</td>
+                  <td>{appointment?.slot}</td>
                   <td>
-                    {appointment.price ? (
+                    {appointment?.price}
+                    <br />
+                  </td>
+                  <td>
+                    {appointment?.price ? (
                       <Link
-                        to={`payment/${appointment._id}`}
+                        to={`payment/${appointment?._id}`}
                         className="btn btn-ghost btn-xs"
                       >
                         Pay
@@ -94,6 +119,7 @@ const MyAppointments = () => {
               <th>Treatment Name</th>
               <th>Date</th>
               <th>Time</th>
+              <th>Price</th>
               <th>Payment</th>
               <th>Action</th>
             </tr>
