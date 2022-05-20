@@ -1,7 +1,7 @@
 import { signOut } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import auth from "../../../firebase.init";
 
 const MyAppointments = () => {
@@ -10,12 +10,15 @@ const MyAppointments = () => {
   const navigate = useNavigate();
   useEffect(() => {
     if (user) {
-      fetch(`https://doctors-portal-rm.herokuapp.com/booking?patient=${user.email}`, {
-        method: "GET",
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      })
+      fetch(
+        `https://doctors-portal-rm.herokuapp.com/booking?patient=${user.email}`,
+        {
+          method: "GET",
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      )
         .then((res) => {
           if (res.status === 400 || res.status === 401 || res.status === 403) {
             navigate("/");
@@ -26,8 +29,8 @@ const MyAppointments = () => {
         })
         .then((data) => setAppointments(data));
     }
-  }, [user, navigate]);
-  // console.log(user);
+  }, [user, navigate, appointments]);
+  // console.log(appointments)
   return (
     <>
       <h1 className="text-xl text-teal-300 text-center my-3 capitalize">
@@ -41,7 +44,8 @@ const MyAppointments = () => {
               <th>Treatment Name</th>
               <th>Date</th>
               <th>Time</th>
-              <th></th>
+              <th>Payment</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -65,9 +69,21 @@ const MyAppointments = () => {
                     <br />
                   </td>
                   <td>{appointment.slot}</td>
-                  <th>
+                  <td>
+                    {appointment.price ? (
+                      <Link
+                        to={`payment/${appointment._id}`}
+                        className="btn btn-ghost btn-xs"
+                      >
+                        Pay
+                      </Link>
+                    ) : (
+                      <span>No need</span>
+                    )}
+                  </td>
+                  <td>
                     <button className="btn btn-ghost btn-xs">Cancel</button>
-                  </th>
+                  </td>
                 </tr>
               );
             })}
@@ -78,7 +94,8 @@ const MyAppointments = () => {
               <th>Treatment Name</th>
               <th>Date</th>
               <th>Time</th>
-              <th></th>
+              <th>Payment</th>
+              <th>Action</th>
             </tr>
           </tfoot>
         </table>

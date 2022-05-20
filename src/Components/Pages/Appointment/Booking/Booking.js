@@ -1,12 +1,12 @@
 import React from "react";
 
 const Booking = ({ booking, setTreatment }) => {
-  const { name, slots } = booking;
+  const { name, slots, price } = booking;
   return (
     <div>
       <div className="card bg-base-100 shadow-xl">
-        <div className="card-body">
-          <h2 className="card-title text-primary">{name}</h2>
+        <div className="card-body text-center">
+          <h2 className="text-primary text-center text-2xl">{name}</h2>
           <p>
             {slots.length > 0 ? (
               <span>{slots[0]} </span>
@@ -17,6 +17,7 @@ const Booking = ({ booking, setTreatment }) => {
           <p>
             {slots.length} {slots.length > 1 ? "spaces" : "space"} Available
           </p>
+          <span>Price $ {price}</span>
           <div className="card-actions justify-center">
             <label
               onClick={() => setTreatment(booking)}
